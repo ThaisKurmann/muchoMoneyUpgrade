@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.Data.Entity;
 using System.Data.SQLite;
 
 namespace MuchMoneyUpgrade
@@ -14,16 +18,33 @@ namespace MuchMoneyUpgrade
             {
                 Directory.CreateDirectory(MuchMoneyPath);
             }
-
-            string dataBaseSqlitePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"{DATABASE_FOLDER}\\Database.sqlite");
-            bool checkFile = File.Exists(dataBaseSqlitePath);
-
-            var connectionString = $"Data Source={dataBaseSqlitePath}";
-            var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-
+            
+            var host = CreateHostBuilder().Build();
+                    
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+           
+            var databaseContext = host.Services.GetRequiredService<DatabaseContext>();
+            databaseContext.Database.Migrate();
+            
+            var form = host.Services.GetRequiredService<Form1>();
+            
+            Application.Run(form);
         }
+
+        static IHostBuilder CreateHostBuilder() =>
+        Host.CreateDefaultBuilder()
+            .ConfigureServices((context, services) =>
+            {
+                // Connection string
+                string dataBaseSqlitePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"{DATABASE_FOLDER}\\Database.sqlite");
+                var connectionString = $"Data Source={dataBaseSqlitePath}";
+
+                // Registrar DbContext
+                services.AddDbContext<DatabaseContext>(options =>
+                    options.UseSqlite(connectionString));
+
+                // Registrar formulários com dependências
+                services.AddTransient<Form1>();
+            });
     }
 }
