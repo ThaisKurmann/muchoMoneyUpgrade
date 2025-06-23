@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Entity;
-using System.Data.SQLite;
 
 namespace MuchMoneyUpgrade
 {
@@ -26,7 +24,7 @@ namespace MuchMoneyUpgrade
             var databaseContext = host.Services.GetRequiredService<DatabaseContext>();
             databaseContext.Database.Migrate();
             
-            var form = host.Services.GetRequiredService<Form1>();
+            var form = host.Services.GetRequiredService<MainForm>();
             
             Application.Run(form);
         }
@@ -44,7 +42,7 @@ namespace MuchMoneyUpgrade
                     options.UseSqlite(connectionString));
 
                 // Registrar formulários com dependências
-                services.AddTransient<Form1>();
+                services.AddTransient<MainForm>();
             });
     }
 }
