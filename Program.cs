@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Data.Entity;
-using System.Data.SQLite;
+using MuchMoneyUpgrade.Services;
 
 namespace MuchMoneyUpgrade
 {
@@ -26,7 +25,7 @@ namespace MuchMoneyUpgrade
             var databaseContext = host.Services.GetRequiredService<DatabaseContext>();
             databaseContext.Database.Migrate();
             
-            var form = host.Services.GetRequiredService<Form1>();
+            var form = host.Services.GetRequiredService<MainForm>();
             
             Application.Run(form);
         }
@@ -35,16 +34,13 @@ namespace MuchMoneyUpgrade
         Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
-                // Connection string
                 string dataBaseSqlitePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"{DATABASE_FOLDER}\\Database.sqlite");
                 var connectionString = $"Data Source={dataBaseSqlitePath}";
 
-                // Registrar DbContext
                 services.AddDbContext<DatabaseContext>(options =>
-                    options.UseSqlite(connectionString));
-
-                // Registrar formulários com dependências
-                services.AddTransient<Form1>();
+                    options.UseSqlite(connectionString));                
+                services.AddTransient<MainForm>();
+                services.AddSingleton<CreateCategoryUiService>();
             });
     }
 }
