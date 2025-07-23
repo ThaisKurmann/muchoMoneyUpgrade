@@ -1,11 +1,9 @@
-﻿//SALVAR NOVA CATEGORIA NO BD
-//Ps: Se tiver duvidas como faz, basta olhar no programa do Bolao e tentar entender. Replique o codigo, caso tenha entendido;
-
+﻿using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
 
 namespace MuchMoneyUpgrade.Repositories
 {
-    public class CategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly DatabaseContext _databaseContext;
 

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Repositories;
 using MuchMoneyUpgrade.Services;
 
@@ -42,9 +43,9 @@ namespace MuchMoneyUpgrade
                     options.UseSqlite(connectionString));
 
                 services.AddTransient<MainForm>();
-                services.AddSingleton<CreateCategoryUiService>();
-                services.AddSingleton<CategoryService>();
-                services.AddSingleton<CategoryRepository>();
+                services.AddSingleton<ICreateCategoryUiService, CreateCategoryUiService>();
+                services.AddSingleton<ICategoryService, CategoryService>();
+                services.AddSingleton<ICategoryRepository, CategoryRepository>();
             });
     }
 }

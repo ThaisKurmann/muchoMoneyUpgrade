@@ -1,8 +1,9 @@
 ﻿using MuchMoneyUpgrade.Dtos;
+using MuchMoneyUpgrade.Interfaces;
 
 namespace MuchMoneyUpgrade.Services
 {
-    public class CreateCategoryUiService
+    public class CreateCategoryUiService : ICreateCategoryUiService
     {
 
         public CreateCategoryUiService()
@@ -42,32 +43,11 @@ namespace MuchMoneyUpgrade.Services
             createCategoryUiDto.CreateCategoryButton.TabIndex = 2;
             createCategoryUiDto.CreateCategoryButton.Text = "create";
             createCategoryUiDto.CreateCategoryButton.UseVisualStyleBackColor = true;
-            //teste
             createCategoryUiDto.CreateCategoryButton.Tag = createCategoryUiDto.CreateCategoryTextBox;
 
 
 
            return createCategoryUiDto;
         }
-
-        //public void ButtonCreateCategory_Click(object sender, EventArgs e)
-        //{
-        //    Button button = sender as Button;
-
-        //    if (button != null && button.Tag is TextBox)
-        //    {
-        //        TextBox textBox = (TextBox)button.Tag;
-        //        string nameOfCategory = textBox.Text;
-        //        MessageBox.Show("Digitado: " + nameOfCategory);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Erro, nome digitado nao encontrado");
-        //    }
-            
-        //}
-
-
-
     }
 }

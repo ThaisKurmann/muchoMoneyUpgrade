@@ -1,4 +1,5 @@
 ﻿using MuchMoneyUpgrade.Dtos;
+using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
 using MuchMoneyUpgrade.Services;
 using System.Data.Entity;
@@ -7,12 +8,12 @@ namespace MuchMoneyUpgrade
 {
     public class MainForm : Form
     {
-        private readonly CreateCategoryUiService _createCategoryUiService;
-        private readonly CategoryService _categoryService;
+        private readonly ICreateCategoryUiService _createCategoryUiService;
+        private readonly ICategoryService _categoryService;
         
         private CreateCategoryUiItems CreateCategoryUiItems;
 
-        public MainForm(CreateCategoryUiService createCategoryUiService, CategoryService categoryService)
+        public MainForm(ICreateCategoryUiService createCategoryUiService, ICategoryService categoryService)
         {
             _createCategoryUiService = createCategoryUiService;
             _categoryService = categoryService;
@@ -34,17 +35,9 @@ namespace MuchMoneyUpgrade
         {
             string nameOfNewCategory = CreateCategoryUiItems.CreateCategoryTextBox.Text;
 
-            //CHAMAR SERVICE AQUI
             _categoryService.CreateCategory(nameOfNewCategory);
 
-            //var newCategory = new Category { Name = nameOfNewCategory };
-
-            //var dataBase = new DatabaseContext();
-            //dataBase.Categories.Add(newCategory);
-            //dataBase.SaveChanges();
-            //dataBase.Dispose();
-
-            MessageBox.Show("nome da categoria: " + nameOfNewCategory);
+            MessageBox.Show("Category '" + nameOfNewCategory + "' created");
 
         }
     }
