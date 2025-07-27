@@ -36,9 +36,6 @@ namespace MuchMoneyUpgrade
             string nameOfNewCategory = CreateCategoryUiItems.CreateCategoryTextBox.Text;
 
             _categoryService.CreateCategory(nameOfNewCategory);
-
-            MessageBox.Show($"Category {nameOfNewCategory} created");
-
         }
     }
 }

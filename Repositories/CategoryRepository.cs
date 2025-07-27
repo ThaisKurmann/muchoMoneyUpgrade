@@ -20,5 +20,9 @@ namespace MuchMoneyUpgrade.Repositories
             return newCategory.Id;
         }
 
+        public Category GetCategoryByName(string name)
+        {
+            return _databaseContext.Categories.FirstOrDefault(category => category.Name == name);
+        }
     }
 }

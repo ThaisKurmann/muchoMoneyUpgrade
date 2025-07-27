@@ -14,10 +14,24 @@ namespace MuchMoneyUpgrade.Services
         }
 
         public void CreateCategory(string categoryName)
-        {   
-            var newCategory = new Category { Name = categoryName };
-            _categoryRepository.InsertCategory(newCategory);
+        {
+            var categoryWithInputName = _categoryRepository.GetCategoryByName(categoryName);
+
+            if (categoryWithInputName == null)
+            {
+                var newCategory = new Category()
+                {
+                    Name = categoryName
+                };
+
+                _categoryRepository.InsertCategory(newCategory);
+
+                MessageBox.Show($"Category '{newCategory.Name}' created");
+            }
+            else
+            {
+                MessageBox.Show("Category alread exist!");
+            }
         }
     }
-
 }
