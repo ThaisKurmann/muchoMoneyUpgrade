@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MuchMoneyUpgrade.Interfaces;
+using MuchMoneyUpgrade.Repositories;
 using MuchMoneyUpgrade.Services;
 
 namespace MuchMoneyUpgrade
@@ -24,7 +26,7 @@ namespace MuchMoneyUpgrade
            
             var databaseContext = host.Services.GetRequiredService<DatabaseContext>();
             databaseContext.Database.Migrate();
-            
+
             var form = host.Services.GetRequiredService<MainForm>();
             
             Application.Run(form);
@@ -38,9 +40,12 @@ namespace MuchMoneyUpgrade
                 var connectionString = $"Data Source={dataBaseSqlitePath}";
 
                 services.AddDbContext<DatabaseContext>(options =>
-                    options.UseSqlite(connectionString));                
+                    options.UseSqlite(connectionString));
+
                 services.AddTransient<MainForm>();
-                services.AddSingleton<CreateCategoryUiService>();
+                services.AddSingleton<ICreateCategoryUiService, CreateCategoryUiService>();
+                services.AddSingleton<ICategoryService, CategoryService>();
+                services.AddSingleton<ICategoryRepository, CategoryRepository>();
             });
     }
 }

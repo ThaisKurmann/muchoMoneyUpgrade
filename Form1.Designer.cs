@@ -1,4 +1,5 @@
-﻿namespace MuchMoneyUpgrade
+﻿
+namespace MuchMoneyUpgrade
 {
     partial class Form1
     {
@@ -39,10 +40,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(60, 58);
             label1.Name = "label1";
-            label1.Size = new Size(87, 15);
+            label1.Size = new Size(114, 15);
             label1.TabIndex = 0;
-            label1.Text = "testando label1";
-            label1.Click += label1_Click;
+            label1.Text = "Cria Catergoria teste";
             // 
             // label2
             // 
@@ -61,6 +61,7 @@
             button1.TabIndex = 2;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -83,6 +84,7 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
 
         #endregion
 

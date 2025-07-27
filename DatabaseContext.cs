@@ -11,5 +11,9 @@ namespace MuchMoneyUpgrade
          : base(options)
         {
         }
+
+        public DatabaseContext()
+        {
+        }
     }
 }
