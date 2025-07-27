@@ -37,7 +37,7 @@ namespace MuchMoneyUpgrade
 
             _categoryService.CreateCategory(nameOfNewCategory);
 
-            MessageBox.Show("Category '" + nameOfNewCategory + "' created");
+            MessageBox.Show($"Category {nameOfNewCategory} created");
 
         }
     }
