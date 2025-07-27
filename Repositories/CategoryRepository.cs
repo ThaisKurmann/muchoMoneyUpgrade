@@ -14,14 +14,13 @@ namespace MuchMoneyUpgrade.Repositories
 
         public int InsertCategory(Category newCategory)
         {
-
             _databaseContext.Categories.Add(newCategory);
             _databaseContext.SaveChanges();
 
             return newCategory.Id;
         }
 
-        public Category GetCategory(string name)
+        public Category GetCategoryByName(string name)
         {
             return _databaseContext.Categories.FirstOrDefault(category => category.Name == name);
         }
