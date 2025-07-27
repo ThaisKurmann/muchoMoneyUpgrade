@@ -13,15 +13,15 @@ namespace MuchMoneyUpgrade.Services
             _categoryRepository = categoryRepository;
         }
 
-        public void CreateCategory(string categoryWithInputName)
+        public void CreateCategory(string categoryName)
         {
-            var result = _categoryRepository.GetCategoryByName(categoryWithInputName);
+            var categoryWithInputName = _categoryRepository.GetCategoryByName(categoryName);
 
-            if (result == null)
+            if (categoryWithInputName == null)
             {
                 var newCategory = new Category()
                 {
-                    Name = categoryWithInputName
+                    Name = categoryName
                 };
 
                 _categoryRepository.InsertCategory(newCategory);
