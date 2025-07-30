@@ -33,5 +33,11 @@ namespace MuchMoneyUpgrade.Services
                 MessageBox.Show("Category alread exist!");
             }
         }
+
+        public List<Category> GetAllCategories() 
+        {
+            return _categoryRepository.GetAllCategories();   
+        }
+
     }
 }

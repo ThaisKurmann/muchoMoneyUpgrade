@@ -1,8 +1,6 @@
 ﻿using MuchMoneyUpgrade.Dtos;
 using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
-using MuchMoneyUpgrade.Services;
-using System.Data.Entity;
 
 namespace MuchMoneyUpgrade
 {
@@ -27,8 +25,10 @@ namespace MuchMoneyUpgrade
             Controls.Add(CreateCategoryUiItems.CreateCategoryLabelName);
             Controls.Add(CreateCategoryUiItems.CreateCategoryTextBox);
             Controls.Add(CreateCategoryUiItems.CreateCategoryButton);
+            Controls.Add(CreateCategoryUiItems.CreateCategoryListBox);
 
             CreateCategoryUiItems.CreateCategoryButton.Click += ButtonCreateCategory_Click;
+           
         }
 
         public void ButtonCreateCategory_Click(object sender, EventArgs e)
@@ -36,6 +36,10 @@ namespace MuchMoneyUpgrade
             string nameOfNewCategory = CreateCategoryUiItems.CreateCategoryTextBox.Text;
 
             _categoryService.CreateCategory(nameOfNewCategory);
+
+            CreateCategoryUiItems.CreateCategoryListBox.DataSource = null;
+            CreateCategoryUiItems.CreateCategoryListBox.DataSource = _categoryService.GetAllCategories();
         }
+
     }
 }
