@@ -52,8 +52,9 @@ namespace MuchMoneyUpgrade.Services
             createCategoryUiDto.CreateCategoryListBox.ItemHeight = 15;
             createCategoryUiDto.CreateCategoryListBox.Location = new Point(337, 47);
             createCategoryUiDto.CreateCategoryListBox.Name = "listBox1";
-            createCategoryUiDto.CreateCategoryListBox.Size = new Size(405, 364);
+            createCategoryUiDto.CreateCategoryListBox.Size = new Size(182, 364);
             createCategoryUiDto.CreateCategoryListBox.TabIndex = 4;
+            createCategoryUiDto.CreateCategoryListBox.Sorted = true;
 
 
 

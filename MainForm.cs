@@ -28,17 +28,24 @@ namespace MuchMoneyUpgrade
             Controls.Add(CreateCategoryUiItems.CreateCategoryListBox);
 
             CreateCategoryUiItems.CreateCategoryButton.Click += ButtonCreateCategory_Click;
-           
+
+            var categories = _categoryService.GetAllCategories();
+
+            CreateCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
         }
 
         public void ButtonCreateCategory_Click(object sender, EventArgs e)
         {
             string nameOfNewCategory = CreateCategoryUiItems.CreateCategoryTextBox.Text;
+            
+            var newCategory = _categoryService.CreateCategory(nameOfNewCategory);
 
-            _categoryService.CreateCategory(nameOfNewCategory);
+            if (newCategory != null)
+            {
+                CreateCategoryUiItems.CreateCategoryListBox.Items.Add(newCategory.Name);
+            }
 
-            CreateCategoryUiItems.CreateCategoryListBox.DataSource = null;
-            CreateCategoryUiItems.CreateCategoryListBox.DataSource = _categoryService.GetAllCategories();
+            CreateCategoryUiItems.CreateCategoryTextBox.ResetText();
         }
 
     }

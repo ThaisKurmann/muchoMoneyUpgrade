@@ -13,7 +13,7 @@ namespace MuchMoneyUpgrade.Services
             _categoryRepository = categoryRepository;
         }
 
-        public void CreateCategory(string categoryName)
+        public Category CreateCategory(string categoryName)
         {
             var categoryWithInputName = _categoryRepository.GetCategoryByName(categoryName);
 
@@ -27,11 +27,14 @@ namespace MuchMoneyUpgrade.Services
                 _categoryRepository.InsertCategory(newCategory);
 
                 MessageBox.Show($"Category '{newCategory.Name}' created");
+
+                return newCategory;
             }
             else
             {
                 MessageBox.Show("Category alread exist!");
             }
+            return null;
         }
 
         public List<Category> GetAllCategories() 
