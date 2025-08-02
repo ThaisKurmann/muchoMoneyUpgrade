@@ -1,7 +1,12 @@
-﻿namespace MuchMoneyUpgrade.Interfaces
+﻿using MuchMoneyUpgrade.Models;
+using System.Reflection.Metadata.Ecma335;
+
+namespace MuchMoneyUpgrade.Interfaces
 {
     public interface ICategoryService
     {
-        public void CreateCategory(string categoryName);
+        public Category CreateCategory(string categoryName);
+        public List<Category> GetAllCategories();
+        
     }
 }

@@ -1,10 +1,12 @@
 ﻿using MuchMoneyUpgrade.Dtos;
 using MuchMoneyUpgrade.Interfaces;
+using System.Windows.Forms;
 
 namespace MuchMoneyUpgrade.Services
 {
     public class CreateCategoryUiService : ICreateCategoryUiService
     {
+
 
         public CreateCategoryUiService()
         {
@@ -45,9 +47,18 @@ namespace MuchMoneyUpgrade.Services
             createCategoryUiDto.CreateCategoryButton.UseVisualStyleBackColor = true;
             createCategoryUiDto.CreateCategoryButton.Tag = createCategoryUiDto.CreateCategoryTextBox;
 
+            //ListBox Create Category
+            createCategoryUiDto.CreateCategoryListBox.FormattingEnabled = true;
+            createCategoryUiDto.CreateCategoryListBox.ItemHeight = 15;
+            createCategoryUiDto.CreateCategoryListBox.Location = new Point(337, 47);
+            createCategoryUiDto.CreateCategoryListBox.Name = "listBox1";
+            createCategoryUiDto.CreateCategoryListBox.Size = new Size(182, 364);
+            createCategoryUiDto.CreateCategoryListBox.TabIndex = 4;
+            createCategoryUiDto.CreateCategoryListBox.Sorted = true;
 
 
-           return createCategoryUiDto;
+
+            return createCategoryUiDto;
         }
     }
 }

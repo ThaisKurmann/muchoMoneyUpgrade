@@ -33,6 +33,7 @@ namespace MuchMoneyUpgrade
             label2 = new Label();
             button1 = new Button();
             textBox1 = new TextBox();
+            listBox1 = new ListBox();
             SuspendLayout();
             // 
             // label1
@@ -70,11 +71,21 @@ namespace MuchMoneyUpgrade
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 3;
             // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new Point(337, 47);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(405, 364);
+            listBox1.TabIndex = 4;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(824, 452);
+            Controls.Add(listBox1);
             Controls.Add(textBox1);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -92,5 +103,6 @@ namespace MuchMoneyUpgrade
         private Label label2;
         private Button button1;
         private TextBox textBox1;
+        private ListBox listBox1;
     }
 }
