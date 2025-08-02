@@ -1,6 +1,5 @@
 ﻿using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
-using MuchMoneyUpgrade.Repositories;
 
 namespace MuchMoneyUpgrade.Services
 {
@@ -17,30 +16,27 @@ namespace MuchMoneyUpgrade.Services
         {
             var categoryWithInputName = _categoryRepository.GetCategoryByName(categoryName);
 
-            if (categoryWithInputName == null)
-            {
-                var newCategory = new Category()
-                {
-                    Name = categoryName
-                };
-
-                _categoryRepository.InsertCategory(newCategory);
-
-                MessageBox.Show($"Category '{newCategory.Name}' created");
-
-                return newCategory;
-            }
-            else
+            if (categoryWithInputName != null)
             {
                 MessageBox.Show("Category alread exist!");
+                return null;
             }
-            return null;
+
+            var newCategory = new Category()
+            {
+                Name = categoryName
+            };
+
+            _categoryRepository.InsertCategory(newCategory);
+
+            MessageBox.Show($"Category '{newCategory.Name}' created");
+
+            return newCategory;
         }
 
-        public List<Category> GetAllCategories() 
+        public List<Category> GetAllCategories()
         {
-            return _categoryRepository.GetAllCategories();   
+            return _categoryRepository.GetAllCategories();
         }
-
     }
 }
