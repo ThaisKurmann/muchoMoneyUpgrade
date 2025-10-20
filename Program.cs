@@ -10,6 +10,7 @@ namespace MuchMoneyUpgrade
     internal static class Program
     {
         private const string DATABASE_FOLDER = "MuchMoney";
+
         [STAThread]
         static void Main()
         {
@@ -43,9 +44,9 @@ namespace MuchMoneyUpgrade
                     options.UseSqlite(connectionString));
 
                 services.AddTransient<MainForm>();
-                services.AddSingleton<ICreateCategoryUiService, CreateCategoryUiService>();
-                services.AddSingleton<ICategoryService, CategoryService>();
-                services.AddSingleton<ICategoryRepository, CategoryRepository>();
+                services.AddScoped<ICreateCategoryUiService, CreateCategoryUiService>();
+                services.AddScoped<ICategoryService, CategoryService>();
+                services.AddScoped<ICategoryRepository, CategoryRepository>();
             });
     }
 }
