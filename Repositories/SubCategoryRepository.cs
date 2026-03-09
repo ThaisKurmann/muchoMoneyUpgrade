@@ -12,12 +12,22 @@ namespace MuchMoneyUpgrade.Repositories
             this.databaseContext = databaseContext;
         }
 
-        public int InsertSubCategory(SubCategory newSubCategory)
+        public SubCategory InsertSubCategory(SubCategory newSubCategory)
         {
-            databaseContext.SubCategories.Add(newSubCategory);
-            databaseContext.SaveChanges();
+            var subCategoryName = GetSubCategoryByName(newSubCategory.Name);
 
-            return newSubCategory.Category.Id;
+            if (subCategoryName == null)
+            {
+                databaseContext.SubCategories.Add(newSubCategory);
+                databaseContext.SaveChanges();
+
+                return newSubCategory;
+            }
+            else
+            {
+                MessageBox.Show("SubCategory already exist!");
+            }
+                return null;
         }
 
         public List<SubCategory> GetAllSubCategories(SubCategory subCategory) 
@@ -25,10 +35,9 @@ namespace MuchMoneyUpgrade.Repositories
             return databaseContext.SubCategories.ToList();
         }
 
-        public bool SubCategoryAlreadyExist(string subCategory, int category)
+        public SubCategory GetSubCategoryByName(string subCategoryName)
         {
-            //testar e ve se pega apenas as subCategory da Category desejada!
-            return true;
+            return databaseContext.SubCategories.FirstOrDefault(subCategory => subCategory.Name == subCategoryName);
         }
     }
 }

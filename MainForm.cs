@@ -57,9 +57,7 @@ namespace MuchMoneyUpgrade
 
         public void SelectedCategoryShowYoursSubCategoriesOnListBox(object sender, EventArgs e)
         {
-            //ListBox list = (ListBox)sender;
-
-            string nameOfCategorySelected = createCategoryUiItems.CreateCategoryListBox.Text; /*nao consegue pegar a string e transformar num objeto*/
+            string nameOfCategorySelected = createCategoryUiItems.CreateCategoryListBox.Text;
 
             var category = categoryService.GetCategoryByName(nameOfCategorySelected);
 
@@ -97,9 +95,6 @@ namespace MuchMoneyUpgrade
 
             createSubCategoryUiItems.CreateSubCategoryButton.Click += ButtonCreateSubCategory;
 
-            //var categories = this.categoryService.GetAllCategories();
-
-            //createCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
         }
 
         public void ButtonCreateSubCategory(object sender, EventArgs e)
