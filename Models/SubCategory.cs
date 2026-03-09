@@ -10,7 +10,7 @@ namespace MuchMoneyUpgrade.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
     }
 }

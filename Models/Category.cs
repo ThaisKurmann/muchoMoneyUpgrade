@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<SubCategory> SubCategory = new List<SubCategory>();
+        public virtual List<SubCategory> SubCategories {  get; set; }
 
         public override string ToString()
         {

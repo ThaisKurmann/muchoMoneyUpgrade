@@ -1,52 +1,129 @@
 ﻿using MuchMoneyUpgrade.Dtos;
 using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
+using MuchMoneyUpgrade.Ui;
 
 namespace MuchMoneyUpgrade
 {
     public class MainForm : Form
     {
-        private readonly ICreateCategoryUiService _createCategoryUiService;
-        private readonly ICategoryService _categoryService;
+        private readonly ICreateCategoryUiService createCategoryUiService;
+        private readonly ICreateSubCategoryUiService createSubCategoryUiService;
+        private readonly ICategoryService categoryService;
+        private readonly ISubCategoryService subCategoryService;
         
-        private CreateCategoryUiItems CreateCategoryUiItems;
+        private Dtos.CreateCategoryUiItems createCategoryUiItems;
+        private Ui.CreateSubCategoryUiItems createSubCategoryUiItems;
 
-        public MainForm(ICreateCategoryUiService createCategoryUiService, ICategoryService categoryService)
+        public MainForm(ICreateCategoryUiService createCategoryUiService, 
+            ICategoryService categoryService, 
+            ICreateSubCategoryUiService createSubCategoryUiService, 
+            ISubCategoryService subCategoryService)
         {
-            _createCategoryUiService = createCategoryUiService;
-            _categoryService = categoryService;
-            
-            CreateCategoryUiItems = _createCategoryUiService.CreateInitialFormItem();
+            this.createCategoryUiService = createCategoryUiService;
+            this.createSubCategoryUiService = createSubCategoryUiService;
+            this.categoryService = categoryService;
+            this.subCategoryService = subCategoryService;
 
-                                              
-            Text = "Much Money";
-            ClientSize = new Size(824, 452);
-            Controls.Add(CreateCategoryUiItems.CreateCategoryLabel);
-            Controls.Add(CreateCategoryUiItems.CreateCategoryLabelName);
-            Controls.Add(CreateCategoryUiItems.CreateCategoryTextBox);
-            Controls.Add(CreateCategoryUiItems.CreateCategoryButton);
-            Controls.Add(CreateCategoryUiItems.CreateCategoryListBox);
-
-            CreateCategoryUiItems.CreateCategoryButton.Click += ButtonCreateCategory_Click;
-
-            var categories = _categoryService.GetAllCategories();
-
-            CreateCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
+            InitializeComponent();
         }
 
-        public void ButtonCreateCategory_Click(object sender, EventArgs e)
+        public void InitializeComponent()
         {
-            string nameOfNewCategory = CreateCategoryUiItems.CreateCategoryTextBox.Text;
-            
-            var newCategory = _categoryService.CreateCategory(nameOfNewCategory);
+            Text = "Much Money";
+            ClientSize = new Size(1100, 452);
 
-            if (newCategory != null)
+            CreateCategoryForm();
+            CreateSubCategoryForm();
+        }
+
+        public void CreateCategoryForm()
+        {
+            createCategoryUiItems = this.createCategoryUiService.CreateInitialFormItem();
+
+            Controls.Add(createCategoryUiItems.CreateCategoryLabel);
+            Controls.Add(createCategoryUiItems.CreateCategoryLabelName);
+            Controls.Add(createCategoryUiItems.CreateCategoryTextBox);
+            Controls.Add(createCategoryUiItems.CreateCategoryButton);
+            Controls.Add(createCategoryUiItems.CreateCategoryListBox);
+
+            createCategoryUiItems.CreateCategoryButton.Click += ButtonCreateCategory;
+
+            var categories = this.categoryService.GetAllCategories();
+
+            createCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
+            createCategoryUiItems.CreateCategoryListBox.SelectedIndexChanged += SelectedCategoryShowYoursSubCategoriesOnListBox;
+        }
+
+        public void SelectedCategoryShowYoursSubCategoriesOnListBox(object sender, EventArgs e)
+        {
+            //ListBox list = (ListBox)sender;
+
+            string nameOfCategorySelected = createCategoryUiItems.CreateCategoryListBox.Text; /*nao consegue pegar a string e transformar num objeto*/
+
+            var category = categoryService.GetCategoryByName(nameOfCategorySelected);
+
+            createSubCategoryUiItems.CreateSubCategoryListBox.Items.Clear();
+
+            foreach(var subCategory in category.SubCategories)
             {
-                CreateCategoryUiItems.CreateCategoryListBox.Items.Add(newCategory.Name);
+                createSubCategoryUiItems.CreateSubCategoryListBox.Items.Add(subCategory.Name);
+            }
+        }
+
+        public void ButtonCreateCategory(object sender, EventArgs e)
+        {
+            string newCategoryOnTextBox = createCategoryUiItems.CreateCategoryTextBox.Text;
+            
+            var category = categoryService.CreateCategory(newCategoryOnTextBox);
+
+            if (category != null)
+            {
+                createCategoryUiItems.CreateCategoryListBox.Items.Add(category.Name);
             }
 
-            CreateCategoryUiItems.CreateCategoryTextBox.ResetText();
+            createCategoryUiItems.CreateCategoryTextBox.ResetText();
         }
 
+        public void CreateSubCategoryForm()
+        {
+            createSubCategoryUiItems = this.createSubCategoryUiService.CreateInitialFormItem();
+
+            Controls.Add(createSubCategoryUiItems.CreateSubCategoryLabel);
+            Controls.Add(createSubCategoryUiItems.CreateSubCategoryLabelName);
+            Controls.Add(createSubCategoryUiItems.CreateSubCategoryTextBox);
+            Controls.Add(createSubCategoryUiItems.CreateSubCategoryButton);
+            Controls.Add(createSubCategoryUiItems.CreateSubCategoryListBox);
+
+            createSubCategoryUiItems.CreateSubCategoryButton.Click += ButtonCreateSubCategory;
+
+            //var categories = this.categoryService.GetAllCategories();
+
+            //createCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
+        }
+
+        public void ButtonCreateSubCategory(object sender, EventArgs e)
+        {
+            string newSubCategoryOnTextBox = createSubCategoryUiItems.CreateSubCategoryTextBox.Text;
+
+            string selectedCategory = createCategoryUiItems.CreateCategoryListBox.Text;
+    
+            var subCategory = subCategoryService.CreateSubCategory(selectedCategory,newSubCategoryOnTextBox);
+
+            var subCategories = subCategoryService.GetAllSubCategories(subCategory, selectedCategory);
+
+            createSubCategoryUiItems.CreateSubCategoryListBox.Items.Clear();
+
+            foreach (var newSubCategory in subCategories) 
+            {
+                createSubCategoryUiItems.CreateSubCategoryListBox.Items.Add(newSubCategory.Name);
+            }
+
+            createSubCategoryUiItems.CreateSubCategoryTextBox.ResetText();
+
+        }
     }
 }
+
+//Proxima task:
+// - criar apenas uma subcategoria, fazer logica para nao criar subcategoria pre-existente

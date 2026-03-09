@@ -47,6 +47,9 @@ namespace MuchMoneyUpgrade
                 services.AddScoped<ICreateCategoryUiService, CreateCategoryUiService>();
                 services.AddScoped<ICategoryService, CategoryService>();
                 services.AddScoped<ICategoryRepository, CategoryRepository>();
+                services.AddScoped<ICreateSubCategoryUiService, CreateSubCategoryUiService>();
+                services.AddScoped<ISubCategoryService, SubCategoryService>();
+                services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
             });
     }
 }

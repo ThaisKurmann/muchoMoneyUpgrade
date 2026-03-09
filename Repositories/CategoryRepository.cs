@@ -1,33 +1,36 @@
-﻿using MuchMoneyUpgrade.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
 
 namespace MuchMoneyUpgrade.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly DatabaseContext _databaseContext;
+        private readonly DatabaseContext databaseContext;
 
         public CategoryRepository(DatabaseContext databaseContext)
         {
-            _databaseContext = databaseContext;
+            this.databaseContext = databaseContext;
         }
 
         public int InsertCategory(Category newCategory)
         {
-            _databaseContext.Categories.Add(newCategory);
-            _databaseContext.SaveChanges();
+            databaseContext.Categories.Add(newCategory);
+            databaseContext.SaveChanges();
 
             return newCategory.Id;
         }
 
         public Category GetCategoryByName(string name)
         {
-            return _databaseContext.Categories.FirstOrDefault(category => category.Name == name);
+            return databaseContext.Categories.Where(category => category.Name == name)
+                .Include(category => category.SubCategories)
+                .FirstOrDefault();
         }
 
         public List<Category> GetAllCategories() 
         { 
-            return _databaseContext.Categories.ToList();
+            return databaseContext.Categories.ToList();
         }
 
     }

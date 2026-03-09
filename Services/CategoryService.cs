@@ -5,16 +5,16 @@ namespace MuchMoneyUpgrade.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryRepository categoryRepository;
 
         public CategoryService(ICategoryRepository categoryRepository)
         {
-            _categoryRepository = categoryRepository;
+            this.categoryRepository = categoryRepository;
         }
 
         public Category CreateCategory(string categoryName)
         {
-            var categoryWithInputName = _categoryRepository.GetCategoryByName(categoryName);
+            var categoryWithInputName = categoryRepository.GetCategoryByName(categoryName);
 
             if (categoryWithInputName != null)
             {
@@ -24,10 +24,10 @@ namespace MuchMoneyUpgrade.Services
 
             var newCategory = new Category()
             {
-                Name = categoryName
+                Name = categoryName                
             };
 
-            _categoryRepository.InsertCategory(newCategory);
+            categoryRepository.InsertCategory(newCategory);
 
             MessageBox.Show($"Category '{newCategory.Name}' created");
 
@@ -36,7 +36,18 @@ namespace MuchMoneyUpgrade.Services
 
         public List<Category> GetAllCategories()
         {
-            return _categoryRepository.GetAllCategories();
+            return categoryRepository.GetAllCategories();
+        }
+
+        public Category GetCategoryByName(string name)
+        {
+            var categoryWithInputName = categoryRepository.GetCategoryByName(name);
+
+            if (categoryWithInputName == null) {
+                return null;
+            }
+
+            return categoryWithInputName;
         }
     }
 }
