@@ -119,6 +119,3 @@ namespace MuchMoneyUpgrade
         }
     }
 }
-
-//Proxima task:
-// - criar apenas uma subcategoria, fazer logica para nao criar subcategoria pre-existente
