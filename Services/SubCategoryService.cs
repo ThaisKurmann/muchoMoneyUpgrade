@@ -1,7 +1,5 @@
-﻿using MuchMoneyUpgrade.Dtos;
-using MuchMoneyUpgrade.Interfaces;
+﻿using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
-using MuchMoneyUpgrade.Repositories;
 
 namespace MuchMoneyUpgrade.Services
 {
@@ -44,7 +42,7 @@ namespace MuchMoneyUpgrade.Services
             return newSubCategory;
         }
 
-        public List<SubCategory> GetAllSubCategories(SubCategory subCategory, int categoryId) 
+        public List<SubCategory> GetSubCategoriesByCategoryId(SubCategory subCategory, int categoryId) 
         {       
             return subCategoryRepository.GetAllSubCategories(subCategory).Where(subCategory => subCategory.Category.Id == categoryId).ToList();
         }

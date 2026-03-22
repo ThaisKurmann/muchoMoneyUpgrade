@@ -104,7 +104,7 @@ namespace MuchMoneyUpgrade
 
             var subCategory = subCategoryService.CreateSubCategory(selectedCategory.Id,newSubCategoryOnTextBox);
 
-            var subCategories = subCategoryService.GetAllSubCategories(subCategory, selectedCategory.Id);
+            var subCategories = subCategoryService.GetSubCategoriesByCategoryId(subCategory, selectedCategory.Id);
 
             createSubCategoryUiItems.CreateSubCategoryListBox.Items.Clear();
 
