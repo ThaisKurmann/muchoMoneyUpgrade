@@ -1,4 +1,5 @@
-﻿using MuchMoneyUpgrade.Interfaces;
+﻿using MuchMoneyUpgrade.Dtos;
+using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
 using MuchMoneyUpgrade.Repositories;
 
@@ -16,11 +17,11 @@ namespace MuchMoneyUpgrade.Services
             this.subCategoryRepository = subCategoryRepository; 
         }
 
-        public SubCategory CreateSubCategory(string nameOfSelectedCategory, string nameOfNewSubCategory)
+        public SubCategory CreateSubCategory(int selectedCategoryId, string nameOfNewSubCategory)
         {
-            var getCategory = categoryService.GetCategoryByName(nameOfSelectedCategory);
+            var getCategory = categoryService.GetCategoryById(selectedCategoryId);
 
-            if(getCategory == null)
+            if (getCategory == null)
             {
                 MessageBox.Show("Category need to be selected!");
                 return null;
@@ -43,9 +44,9 @@ namespace MuchMoneyUpgrade.Services
             return newSubCategory;
         }
 
-        public List<SubCategory> GetAllSubCategories(SubCategory subCategory, string categoryName) 
+        public List<SubCategory> GetAllSubCategories(SubCategory subCategory, int categoryId) 
         {       
-            return subCategoryRepository.GetAllSubCategories(subCategory).Where(subCategory => subCategory.Category.Name == categoryName).ToList();
+            return subCategoryRepository.GetAllSubCategories(subCategory).Where(subCategory => subCategory.Category.Id == categoryId).ToList();
         }
     }
 }

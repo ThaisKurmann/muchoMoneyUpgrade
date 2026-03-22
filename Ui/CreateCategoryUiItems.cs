@@ -1,4 +1,6 @@
-﻿namespace MuchMoneyUpgrade.Dtos
+﻿using MuchMoneyUpgrade.Models;
+
+namespace MuchMoneyUpgrade.Dtos
 {
     public class CreateCategoryUiItems
     {

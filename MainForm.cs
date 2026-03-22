@@ -1,7 +1,6 @@
 ﻿using MuchMoneyUpgrade.Dtos;
 using MuchMoneyUpgrade.Interfaces;
 using MuchMoneyUpgrade.Models;
-using MuchMoneyUpgrade.Ui;
 
 namespace MuchMoneyUpgrade
 {
@@ -52,14 +51,14 @@ namespace MuchMoneyUpgrade
             var categories = this.categoryService.GetAllCategories();
 
             createCategoryUiItems.CreateCategoryListBox.Items.AddRange(categories.ToArray());
-            createCategoryUiItems.CreateCategoryListBox.SelectedIndexChanged += SelectedCategoryShowYoursSubCategoriesOnListBox;
+            createCategoryUiItems.CreateCategoryListBox.SelectedIndexChanged += CategoryListSelectedItemChanged;
         }
 
-        public void SelectedCategoryShowYoursSubCategoriesOnListBox(object sender, EventArgs e)
+        public void CategoryListSelectedItemChanged(object sender, EventArgs e)
         {
-            string nameOfCategorySelected = createCategoryUiItems.CreateCategoryListBox.Text;
+            var selectedCategory = createCategoryUiItems.CreateCategoryListBox.SelectedItem as Category;
 
-            var category = categoryService.GetCategoryByName(nameOfCategorySelected);
+            var category = categoryService.GetCategoryById(selectedCategory.Id);
 
             createSubCategoryUiItems.CreateSubCategoryListBox.Items.Clear();
 
@@ -101,11 +100,11 @@ namespace MuchMoneyUpgrade
         {
             string newSubCategoryOnTextBox = createSubCategoryUiItems.CreateSubCategoryTextBox.Text;
 
-            string selectedCategory = createCategoryUiItems.CreateCategoryListBox.Text;
-    
-            var subCategory = subCategoryService.CreateSubCategory(selectedCategory,newSubCategoryOnTextBox);
+            var selectedCategory = createCategoryUiItems.CreateCategoryListBox.SelectedItem as Category;
 
-            var subCategories = subCategoryService.GetAllSubCategories(subCategory, selectedCategory);
+            var subCategory = subCategoryService.CreateSubCategory(selectedCategory.Id,newSubCategoryOnTextBox);
+
+            var subCategories = subCategoryService.GetAllSubCategories(subCategory, selectedCategory.Id);
 
             createSubCategoryUiItems.CreateSubCategoryListBox.Items.Clear();
 
@@ -119,3 +118,6 @@ namespace MuchMoneyUpgrade
         }
     }
 }
+
+//IMPORTANT Note: Everytime when I made a commit, I need to made that on a separate Branch.
+//That's really important, otherwise Rafa can not see what I have exactly changed.
