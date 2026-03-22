@@ -49,5 +49,10 @@ namespace MuchMoneyUpgrade.Services
 
             return categoryWithInputName;
         }
+
+        public Category GetCategoryById(int id)
+        {
+            return categoryRepository.GetCategoryById(id);
+        }
     }
 }

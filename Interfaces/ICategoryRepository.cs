@@ -7,6 +7,7 @@ namespace MuchMoneyUpgrade.Interfaces
         public int InsertCategory(Category newCategory);
         public Category GetCategoryByName(string name);
         public List<Category> GetAllCategories();
+        public Category GetCategoryById(int id);
 
     }
 }

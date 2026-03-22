@@ -28,6 +28,13 @@ namespace MuchMoneyUpgrade.Repositories
                 .FirstOrDefault();
         }
 
+        public Category GetCategoryById(int categoryId)
+        {
+            return databaseContext.Categories.Where(category => category.Id == categoryId)
+                .Include(category => category.SubCategories)
+                .FirstOrDefault();
+        }
+
         public List<Category> GetAllCategories() 
         { 
             return databaseContext.Categories.ToList();
